@@ -3,7 +3,11 @@ $medblue: #2980B9;
 $ltblue: #3498DB;
 $off-white: #ECF0F1;
 $red: #E74C3C;
+$footer-height: 40px;
 
+a:hover {
+  text-decoration: none;
+}
 header, footer {
   color: $off-white;
 }
@@ -34,11 +38,14 @@ header, footer {
     border-bottom: none;
   }
 }
+.main {
+  margin-bottom: $footer-height + 10;
+}
 footer.row {
   position: fixed;
   bottom: 0;
   left: 0;
-  height: 50px;
+  height: $footer-height;
   width: 100%;
   margin: 0;
   padding-top: 10px;

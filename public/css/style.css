@@ -1,3 +1,6 @@
+a:hover {
+  text-decoration: none; }
+
 header, footer {
   color: #ECF0F1; }
 
@@ -23,11 +26,14 @@ header, footer {
 .article-list article:last-child {
   border-bottom: none; }
 
+.main {
+  margin-bottom: 50px; }
+
 footer.row {
   position: fixed;
   bottom: 0;
   left: 0;
-  height: 50px;
+  height: 40px;
   width: 100%;
   margin: 0;
   padding-top: 10px;

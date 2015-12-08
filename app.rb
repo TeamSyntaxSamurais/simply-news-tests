@@ -55,17 +55,75 @@ get '/set-sources' do
       :id => 9,
       :name => "New York Times",
       :url => 'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml'
-    }
+    },
+    {
+      :id => 10,
+      :name => 'ESPN',
+      :url => 'http://sports.espn.go.com/espn/rss/news'
+    },
+    {
+      :id => 11,
+      :name => 'Wall Street Journal',
+      :url => 'http://www.wsj.com/xml/rss/3_7085.xml'
+    },
+    {
+      :id => 12,
+      :name => 'Financial Times',
+      :url => 'http://www.ft.com/rss/home/us'
+    },
+    {
+      :id => 13,
+      :name => 'Yahoo News',
+      :url => 'http://news.yahoo.com/rss/'
+    },
+    {
+      :id => 14,
+      :name => 'The New Yorker',
+      :url => 'http://www.newyorker.com/feed/news'
+    },
+    {
+      :id => 15,
+      :name => 'New York Review of Books',
+      :url => 'http://feeds.feedburner.com/nybooks'
+    },
+    {
+      :id => 16,
+      :name => 'Elle',
+      :url => 'http://www.elle.com/rss/all.xml'
+    },
+    {
+      :id => 17,
+      :name => 'Glamour',
+      :url => 'http://feeds.glamour.com/glamour/glamour_all'
+    },
+    {
+      :id => 18,
+      :name => 'Hollywood Reporter',
+      :url => 'http://feeds.feedburner.com/thr/news'
+    },
+    {
+      :id => 19,
+      :name => 'Yahoo Sports',
+      :url => 'https://sports.yahoo.com/top/rss.xml'
+    },
+    {
+      :id => 20,
+      :name => 'Hacker News',
+      :url => 'https://news.ycombinator.com/rss'
+    },
+    # {
+    #   :id => 21,
+    #   :name => 'Newsweek',
+    #   :url => 'http://www.newsweek.com/rss'
+    # },
+    # {
+    #   :id => 22,
+    #   :name => 'The Economist',
+    #   :url => 'http://www.economist.com/sections/united-states/rss.xml'
+    # }
+
   ]
   return { :set => true }.to_json
-end
-
-get '/test' do
-  session[:sources].each do |source|
-    puts source[:name]
-    rss_to_hash source[:url], false
-  end
-  return 'check the console'
 end
 
 def type_of_rss hash
@@ -120,12 +178,12 @@ def rss_to_hash url, qty=false
   end
 end
 
-get '/feed' do
+get '/' do
   @title = 'News Feed'
   erb :feed
 end
 
-get '/source/:id' do
+get '/:id' do
   key = params[:id].to_i - 1
   @source = session[:sources][key]
   @title = @source[:name]

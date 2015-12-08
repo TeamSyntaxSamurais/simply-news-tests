@@ -1,3 +1,4 @@
-<% session[:sources].each do |source| %>
+<% sources = session[:sources].sort_by { |source| source[:name] }
+sources.each do |source| %>
   <%= erb :partial_article_list, :locals => { :source => source, :qty => 2, :single => false } %>
 <% end %>
