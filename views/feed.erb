@@ -4,7 +4,7 @@
       <h3><%= source[:name] %></h3>
     </div>
     <div class="col-xs-12 article-list">
-      <% articles = rss_to_hash source[:url]
+      <% articles = rss_to_hash source[:url], 2
       articles.each do |article| %>
         <article>
           <a href="<%= article["link"] %>">
@@ -15,6 +15,9 @@
           </a>
         </article>
       <% end %>
+      <article>
+        <a href="#"></a>
+      </article>
     </div>
   </section>
 <% end %>
