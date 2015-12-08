@@ -11,11 +11,16 @@ enable :sessions
 
 get '/set-sources' do
   session[:sources] = [
-    # {
-    #   :id => 1,
-    #   :name => 'The Verge',
-    #   :url => 'http://www.theverge.com/gaming/rss/index.xml'
-    # },
+    {
+      :id => 1,
+      :name => 'The Verge',
+      :url => 'http://www.theverge.com/rss/index.xml'
+    },
+    {
+      :id => 2,
+      :name => 'Mashable',
+      :url => 'http://feeds.mashable.com/Mashable'
+    },
     {
       :id => 3,
       :name => 'Ars Technica',
@@ -45,37 +50,84 @@ get '/set-sources' do
       :id => 8,
       :name => 'CNN',
       :url => 'http://rss.cnn.com/rss/cnn_topstories.rss'
+    },
+    {
+      :id => 9,
+      :name => "New York Times",
+      :url => 'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml'
     }
   ]
   return { :set => true }.to_json
 end
 
 get '/test' do
-  rss_to_hash 'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml', false
-
-  erb :index
+  session[:sources].each do |source|
+    puts source[:name]
+    rss_to_hash source[:url], false
+  end
+  return 'check the console'
 end
 
-def rss_to_hash url, qty
-  items = Nokogiri::XML(open(url))
+def type_of_rss hash
+  if (hash.has_key?('rss'))
+    return 'rss1' # NPR-style RSS
+  elsif (hash.has_key?('feed'))
+    return 'rss2' # Verge-style RSS
+  end
+end
 
-  # items.search('a').each do |a|
-  #   a.remove
-  # end
+def parse_link item
+  unless item["link"].is_a? String
+    if item["link"].is_a? Hash # Verge format
+      item["link"] = item["link"]["href"]
+    elsif item["link"].is_a? Array # NYT format
+      item["link"] = item["link"][0]["href"]
+    end
+  end
+end
 
-  items = Hash.from_xml(items.to_xml)["rss"]["channel"]["item"]
+def parse_description item
+  if item["description"].is_a? Array
+    item["description"] = item["description"][0]
+  end
+end
+
+def rss_to_hash url, qty=false
+  page = Nokogiri::XML(open(url))
+  hash = Hash.from_xml(page.to_xml)
+  type = type_of_rss hash
+  if type == 'rss1'
+    items = hash["rss"]["channel"]["item"]
+    items.each do |item|
+      unless item["descripion"].nil?
+        item["description"] = item["description"].split('<br')[0]
+      end
+    end
+  elsif type == 'rss2'
+    items = hash["feed"]["entry"]
+    items.each do |item|
+      item['description'] = item['content']
+    end
+  end
   items.each do |item|
-    item["description"] = item["description"].split('<br')[0]
+    parse_link item
+    parse_description item
   end
   if qty
     return items[0..qty]
   else
     return items
   end
-  return items
-
 end
 
 get '/feed' do
+  @title = 'News Feed'
   erb :feed
+end
+
+get '/source/:id' do
+  key = params[:id].to_i - 1
+  @source = session[:sources][key]
+  @title = @source[:name]
+  erb :single_source
 end
