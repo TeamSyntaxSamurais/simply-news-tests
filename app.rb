@@ -7,15 +7,38 @@ ActiveRecord::Base.establish_connection(
   #:database => 'database_name'
 )
 
-#### Create routes ####
+enable :sessions
 
-def ng_to_json url
-  @ng = Nokogiri::XML(open(url))
-  return Hash.from_xml(@ng.to_xml).to_json
+get '/set-sources' do
+  session[:sources] = [
+    {
+      :name => 'BBC',
+      :url => 'http://feeds.bbci.co.uk/news/rss.xml'
+    },
+    {
+      :name => 'NPR',
+      :url => 'http://www.npr.org/rss/rss.php?id=1001'
+    },
+    {
+      :name => 'Reuters',
+      :url => 'http://feeds.reuters.com/reuters/topNews'
+    },
+    {
+      :name => 'CNN',
+      :url => 'http://rss.cnn.com/rss/cnn_topstories.rss'
+    }
+  ]
+  return { :set => true }.to_json
 end
 
-get '/nyt' do
-  ng_to_json "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"
+def rss_to_hash url, qty=2
+  items = Nokogiri::XML(open(url))
+  items = Hash.from_xml(items.to_xml)["rss"]["channel"]["item"]
+  items.each do |item|
+    item["description"] = item["description"].split('<br')[0]
+  end
+  puts items
+  return items[0..qty]
 end
 
 get '/reuters' do
@@ -31,8 +54,5 @@ get '/npr' do
 end
 
 get '/feed' do
-  @title = 'News Feed'
-  @source = ng_to_json "http://www.npr.org/rss/rss.php?id=1001"
-  return @doc_json
   erb :feed
 end

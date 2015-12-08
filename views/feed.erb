@@ -1,28 +1,20 @@
-
-
-
-<section class="row">
-  <div class="col-xs-12 source-title">
-    <h3>News Source 1</h3>
-  </div>
-  <div class="col-xs-12 article-list">
-    <article>
-      <h4>Article Title 1 <small>Nov. 12, 1955</small></h4>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      </p>
-    </article>
-    <article>
-      <h4>Article Title 2 <small>Nov. 12, 1955</small></h4>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      </p>
-    </article>
-    <article>
-      <h4>Article Title 3 <small>Nov. 12, 1955</small></h4>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      </p>
-    </article>
-  </div>
-</section>
+<% session[:sources].each do |source| %>
+  <section class="row news-source">
+    <div class="col-xs-12 source-title">
+      <h3><%= source[:name] %></h3>
+    </div>
+    <div class="col-xs-12 article-list">
+      <% articles = rss_to_hash source[:url]
+      articles.each do |article| %>
+        <article>
+          <a href="<%= article["link"] %>">
+            <h4><%= article["title"] %></h4>
+            <p>
+              <%= article["description"] %>
+            </p>
+          </a>
+        </article>
+      <% end %>
+    </div>
+  </section>
+<% end %>
