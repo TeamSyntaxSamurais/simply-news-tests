@@ -5,7 +5,7 @@
     </div>
   <% end %>
   <div class="col-xs-12 article-list">
-    <% articles = rss_to_hash source[:url], qty
+    <% articles = rss_to_hash source[:rss_url], qty
     articles.each do |article| %>
       <article>
         <h4><a href="<%= article["link"] %>"><%= article["title"] %></a></h4>

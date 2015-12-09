@@ -14,102 +14,122 @@ get '/set-sources' do
     {
       :id => 1,
       :name => 'The Verge',
-      :url => 'http://www.theverge.com/rss/index.xml'
+      :rss_url => 'http://www.theverge.com/rss/index.xml',
+      :image_url => '/images/the-verge.png'
     },
     {
       :id => 2,
       :name => 'Mashable',
-      :url => 'http://feeds.mashable.com/Mashable'
+      :rss_url => 'http://feeds.mashable.com/Mashable',
+      :image_url => '/images/mashable.png'
     },
     {
       :id => 3,
       :name => 'Ars Technica',
-      :url => 'http://feeds.arstechnica.com/arstechnica/index'
+      :rss_url => 'http://feeds.arstechnica.com/arstechnica/index',
+      :image_url => '/images/ars-technica.png'
     },
     {
       :id => 4,
       :name => 'Los Angeles Times',
-      :url => 'http://www.latimes.com/rss2.0.xml'
+      :rss_url => 'http://www.latimes.com/rss2.0.xml',
+      :image_url => '/images/los-angeles-times.png'
     },
     {
       :id => 5,
       :name => 'BBC',
-      :url => 'http://feeds.bbci.co.uk/news/rss.xml'
+      :rss_url => 'http://feeds.bbci.co.uk/news/rss.xml',
+      :image_url => '/images/bbc-news.png'
     },
     {
       :id => 6,
       :name => 'NPR',
-      :url => 'http://www.npr.org/rss/rss.php?id=1001'
+      :rss_url => 'http://www.npr.org/rss/rss.php?id=1001',
+      :image_url => '/images/npr.png'
     },
     {
       :id => 7,
       :name => 'Reuters',
-      :url => 'http://feeds.reuters.com/reuters/topNews'
+      :rss_url => 'http://feeds.reuters.com/reuters/topNews',
+      :image_url => '/images/reuters.png'
     },
     {
       :id => 8,
       :name => 'CNN',
-      :url => 'http://rss.cnn.com/rss/cnn_topstories.rss'
+      :rss_url => 'http://rss.cnn.com/rss/cnn_topstories.rss',
+      :image_url => '/images/cnn.jpg'
     },
     {
       :id => 9,
       :name => "New York Times",
-      :url => 'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml'
+      :rss_url => 'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml',
+      :image_url => '/images/nyt.png'
     },
     {
       :id => 10,
       :name => 'ESPN',
-      :url => 'http://sports.espn.go.com/espn/rss/news'
+      :rss_url => 'http://sports.espn.go.com/espn/rss/news',
+      :image_url => '/images/espn.png'
     },
     {
       :id => 11,
       :name => 'Wall Street Journal',
-      :url => 'http://www.wsj.com/xml/rss/3_7085.xml'
+      :rss_url => 'http://www.wsj.com/xml/rss/3_7085.xml',
+      :image_url => '/images/wsj.png'
     },
     {
       :id => 12,
       :name => 'Financial Times',
-      :url => 'http://www.ft.com/rss/home/us'
+      :rss_url => 'http://www.ft.com/rss/home/us',
+      :image_url => '/images/financial-times.png'
     },
     {
       :id => 13,
       :name => 'Yahoo News',
-      :url => 'http://news.yahoo.com/rss/'
+      :rss_url => 'http://news.yahoo.com/rss/',
+      :image_url => '/images/yahoo.png'
     },
     {
       :id => 14,
       :name => 'The New Yorker',
-      :url => 'http://www.newyorker.com/feed/news'
+      :rss_url => 'http://www.newyorker.com/feed/news',
+      :image_url => '/images/the-new-yorker.png'
     },
     {
       :id => 15,
       :name => 'New York Review of Books',
-      :url => 'http://feeds.feedburner.com/nybooks'
+      :rss_url => 'http://feeds.feedburner.com/nybooks',
+      :image_url => '/images/nyrb.png'
     },
     {
       :id => 16,
       :name => 'Elle',
-      :url => 'http://www.elle.com/rss/all.xml'
+      :rss_url => 'http://www.elle.com/rss/all.xml',
+      :image_url => '/images/elle.png'
     },
     {
       :id => 17,
       :name => 'Glamour',
-      :url => 'http://feeds.glamour.com/glamour/glamour_all'
+      :rss_url => 'http://feeds.glamour.com/glamour/glamour_all',
+      :image_url => '/images/glamour.png'
     },
     {
       :id => 18,
       :name => 'Hollywood Reporter',
-      :url => 'http://feeds.feedburner.com/thr/news'
+      :rss_url => 'http://feeds.feedburner.com/thr/news',
+      :image_url => '/images/hollywood-reporter.png'
     },
     {
       :id => 19,
       :name => 'Yahoo Sports',
-      :url => 'https://sports.yahoo.com/top/rss.xml'
+      :rss_url => 'https://sports.yahoo.com/top/rss.xml',
+      :image_url => '/images/yahoo-sports.png'
     },
     {
       :id => 20,
       :name => 'Hacker News',
-      :url => 'https://news.ycombinator.com/rss'
+      :rss_url => 'https://news.ycombinator.com/rss',
+      :image_url => '/images/hacker-news.png'
     },
     # {
     #   :id => 21,
@@ -188,4 +208,10 @@ get '/:id' do
   @source = session[:sources][key]
   @title = @source[:name]
   erb :single_source
+end
+
+get '/choose-sources' do
+  @sources = session[:sources]
+  @title = 'Choose News Sources'
+  erb :choose_sources
 end
