@@ -24,11 +24,13 @@
             </h1>
           </div>
         </div>
-        <div class="row page-title">
-          <div class="col-xs-12">
-            <h2><%= @title %></h2>
+        <% if @title %>
+          <div class="row page-title">
+            <div class="col-xs-12">
+              <h2><%= @title %></h2>
+            </div>
           </div>
-        </div>
+        <% end %>
       </header>
       <section class="main">
         <%= yield %>
