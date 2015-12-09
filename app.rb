@@ -200,10 +200,11 @@ end
 
 get '/' do
   @title = 'News Feed'
+  @sources = session[:sources].sort_by { |source| source[:name] }
   erb :feed
 end
 
-get '/:id' do
+get '/source/:id' do
   key = params[:id].to_i - 1
   @source = session[:sources][key]
   @title = @source[:name]
@@ -211,7 +212,7 @@ get '/:id' do
 end
 
 get '/choose-sources' do
-  @sources = session[:sources]
+  @sources = session[:sources].sort_by { |source| source[:name] }
   @title = 'Choose News Sources'
   erb :choose_sources
 end

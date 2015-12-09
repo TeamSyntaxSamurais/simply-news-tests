@@ -26,6 +26,28 @@ header, footer {
 .article-list article:last-child {
   border-bottom: none; }
 
+.news-sources div {
+  margin: 0;
+  position: relative; }
+.news-sources .left-source {
+  padding: 0.5em 0.25em 0 0.5em; }
+.news-sources .right-source {
+  padding: 0.5em 0.5em 0 0.25em; }
+.news-sources img {
+  box-sizing: border-box;
+  width: 100%;
+  border: 2px solid #2C3E50;
+  border-radius: 2px;
+  margin: 0;
+  padding: 0; }
+.news-sources img:hover {
+  border-color: #3498DB;
+  cursor: pointer; }
+.news-sources input[type="checkbox"] {
+  position: absolute;
+  bottom: 1em;
+  right: 1.25em; }
+
 .main {
   margin-bottom: 50px; }
 
